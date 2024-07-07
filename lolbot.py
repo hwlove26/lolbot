@@ -71,4 +71,25 @@ async def auto(interation: discord.Interaction):
     random.shuffle(users)
     await interation.response.send_message(f"탑: {users[0].mention}, 정글: {users[1].mention}, 미드: {users[2].mention}, 원딜: {users[3].mention}, 서폿: {users[4].mention}")
 
+@bot.tree.command(name="팀")
+async def team(interaction: discord.Interaction):
+    voice_state = interaction.user.voice
+    if voice_state is None or voice_state.channel is None:
+        await interaction.response.send_message("채널 들가고 써라")
+        return
+
+    voice_channel = voice_state.channel
+    users = []
+    for member in voice_channel.members:
+        users.append(member)
+    random.shuffle(users)
+    midpoint = len(users) // 2
+
+    team1 = users[:midpoint]
+    team2 = users[midpoint:]
+
+    team1mention = ' '.join([member.mention for member in team1])
+    team2mention = ' '.join([member.mention for member in team2])
+    await interaction.response.send_message(f"1팀 :{team1mention}, 2팀 :{team2mention}")
+
 bot.run(token)
