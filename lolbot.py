@@ -23,25 +23,25 @@ async def on_ready():
 
 
 
-@bot.tree.command(name="롤")
-@app_commands.describe(user1 = "hi")
-@app_commands.describe(user2 = "hi")
-@app_commands.describe(user3 = "hi")
-@app_commands.describe(user4 = "hi")
-@app_commands.describe(user5 = "hi")
+@bot.tree.command(name="롤", description="랜덤 라인")
+@app_commands.describe(user1 = "1번")
+@app_commands.describe(user2 = "2번")
+@app_commands.describe(user3 = "3번")
+@app_commands.describe(user4 = "4번")
+@app_commands.describe(user5 = "5번")
 async def lol(interation: discord.Interaction, user1:discord.Member, user2:discord.Member, user3:discord.Member, user4:discord.Member, user5:discord.Member):
     users = [user1,user2,user3,user4,user5]
     random.shuffle(users)
     await interation.response.send_message(f"탑: {users[0].mention}, 정글: {users[1].mention}, 미드: {users[2].mention}, 원딜: {users[3].mention}, 서폿: {users[4].mention}")
-
+'''
 @bot.tree.command(name="test")
 @app_commands.describe(user1 = "hi")
 async def test(interation: discord.Interaction, user1:discord.Member):
     author = bot.get_user(int(interation.user.id))
     await interation.response.send_message(user1.id)
+'''
 
-
-@bot.tree.command(name="ㄹㄹ")
+@bot.tree.command(name="ㄹㄹ", description="채널에 들어가있는 사람으로 자동 라인")
 async def auto(interation: discord.Interaction):
     author = bot.get_user(interation.user.id)
     voice_state = interation.user.voice
@@ -71,7 +71,7 @@ async def auto(interation: discord.Interaction):
     random.shuffle(users)
     await interation.response.send_message(f"탑: {users[0].mention}, 정글: {users[1].mention}, 미드: {users[2].mention}, 원딜: {users[3].mention}, 서폿: {users[4].mention}")
 
-@bot.tree.command(name="팀")
+@bot.tree.command(name="팀", description="채널에 들어가있는 사람으로 2팀으로 나누기")
 async def team(interaction: discord.Interaction):
     voice_state = interaction.user.voice
     if voice_state is None or voice_state.channel is None:
