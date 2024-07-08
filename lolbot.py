@@ -23,7 +23,7 @@ async def on_ready():
 
 
 
-@bot.tree.command(name="롤", description="랜덤 라인")
+@bot.tree.command(name="롤", description="5명 선택 랜덤 라인")
 @app_commands.describe(user1 = "1번")
 @app_commands.describe(user2 = "2번")
 @app_commands.describe(user3 = "3번")
