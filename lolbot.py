@@ -41,6 +41,41 @@ async def test(interation: discord.Interaction, user1:discord.Member):
     await interation.response.send_message(user1.id)
 '''
 
+@bot.tree.command(name="ㅇㄹㄴ", description="아레나를 위한")
+async def arena(interation : discord.Interaction):
+    author = bot.get_user(interation.user.id)
+    voice_state = interation.user.voice
+
+
+    if voice_state is None or voice_state.channel is None:
+        await interation.response.send_message("채널 들가고 써라")
+        return
+
+    voice_channel = voice_state.channel
+    if len(voice_channel.members) > 16:
+        await interation.response.send_message("야 사람이 너무 많다;;")
+        return
+
+    users = []
+    teams = []
+    for member in voice_channel.members:
+        users.append(member)
+
+    if len(users) % 2 != 0:
+        users.append(bot.get_user(1235948852780077077))
+
+    random.shuffle(users)
+
+    for i in range(0, len(users), 2):
+        teams.append((users[i], users[i+1]))
+
+    formatted_string = "팀들:\n"
+    for i, team in enumerate(teams):
+        formatted_string += f"팀 {i+1}: {team[0].mention} 와(과) {team[1].mention}\n"
+
+    await interation.response.send_message(formatted_string)
+
+
 @bot.tree.command(name="ㄹㄹ", description="채널에 들어가있는 사람으로 자동 라인")
 async def auto(interation: discord.Interaction):
     author = bot.get_user(interation.user.id)
