@@ -52,14 +52,16 @@ async def arena(interation : discord.Interaction):
         return
 
     voice_channel = voice_state.channel
-    if len(voice_channel.members) > 16:
-        await interation.response.send_message("야 사람이 너무 많다;;")
-        return
 
     users = []
     teams = []
     for member in voice_channel.members:
-        users.append(member)
+        if not member.bot:
+            users.append(member)
+
+    if len(users) > 16:
+        await interation.response.send_message("야 사람이 너무 많다;;")
+        return
 
     if len(users) % 2 != 0:
         users.append(bot.get_user(1235948852780077077))
@@ -76,6 +78,7 @@ async def arena(interation : discord.Interaction):
     await interation.response.send_message(formatted_string)
 
 
+
 @bot.tree.command(name="ㄹㄹ", description="채널에 들어가있는 사람으로 자동 라인")
 async def auto(interation: discord.Interaction):
     author = bot.get_user(interation.user.id)
@@ -87,14 +90,17 @@ async def auto(interation: discord.Interaction):
         return
 
     voice_channel = voice_state.channel
-    if len(voice_channel.members) > 5:
-        await interation.response.send_message("야 사람이 너무 많다;;")
-        return
+
 
     users = []
 
     for member in voice_channel.members:
-        users.append(member)
+        if not member.bot:
+            users.append(member)
+
+    if len(users) > 5:
+        await interation.response.send_message("야 사람이 너무 많다;;")
+        return
 
     while len(users) < 5:
         users.append(bot.get_user(1235948852780077077))
@@ -116,7 +122,8 @@ async def team(interaction: discord.Interaction):
     voice_channel = voice_state.channel
     users = []
     for member in voice_channel.members:
-        users.append(member)
+        if not member.bot:
+            users.append(member)
     random.shuffle(users)
     midpoint = len(users) // 2
 
