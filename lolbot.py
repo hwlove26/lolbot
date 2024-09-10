@@ -74,6 +74,7 @@ async def test(interation: discord.Interaction, user1:discord.User):
         if i.bot:
             users.remove(i)
     await interation.response.send_message(users)
+    .
 '''
 
 @app_commands.allowed_installs(guilds=True, users=False)
