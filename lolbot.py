@@ -81,7 +81,6 @@ async def test(interation: discord.Interaction, user1:discord.User):
 @app_commands.allowed_contexts(guilds=True, dms=True, private_channels=True)
 @bot.tree.command(name="ㅇㄹㄴ", description="아레나를 위한")
 async def arena(interation : discord.Interaction):
-    author = bot.get_user(interation.user.id)
     voice_state = interation.user.voice
 
 
@@ -89,7 +88,6 @@ async def arena(interation : discord.Interaction):
         await interation.response.send_message("채널 들가고 써라")
         return
 
-    voice_channel = voice_state.channel
 
     teams = []
     users = voice_state.channel.members
@@ -160,7 +158,6 @@ async def team(interaction: discord.Interaction):
         await interaction.response.send_message("채널 들가고 써라")
         return
 
-    voice_channel = voice_state.channel
     users = voice_state.channel.members
     for i in users :
         if i.bot:
