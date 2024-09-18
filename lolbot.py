@@ -119,7 +119,7 @@ async def arena(interation : discord.Interaction):
 @app_commands.allowed_installs(guilds=True, users=False)
 @app_commands.allowed_contexts(guilds=True, dms=True, private_channels=True)
 @bot.tree.command(name="ㄹㄹ", description="채널에 들어가있는 사람으로 자동 라인")
-async def auto(interation: discord.Interaction):
+async def auto(interation: discord.Interaction, ex: discord.User=None, ex2: discord.User=None, ex3: discord.User=None, ex4: discord.User=None, ex5: discord.User=None):
     author = bot.get_user(interation.user.id)
     voice_state = interation.user.voice
 
@@ -134,8 +134,25 @@ async def auto(interation: discord.Interaction):
     users = voice_state.channel.members
 
     for i in users :
+        if ex is not None:
+            if i.id == ex.id:
+                users.remove(i)
+        if ex2 is not None:
+            if i.id == ex2.id:
+                users.remove(i)
+        if ex3 is not None:
+            if i.id == ex3.id:
+                users.remove(i)
+        if ex4 is not None:
+            if i.id == ex4.id:
+                users.remove(i)
+        if ex5 is not None:
+            if i.id == ex5.id:
+                users.remove(i)
+
         if i.bot:
             users.remove(i)
+
 
     if len(users) > 5:
         await interation.response.send_message("야 사람이 너무 많다;;")
