@@ -25,11 +25,7 @@ async def on_ready():
 @app_commands.allowed_installs(guilds=True, users=True)
 @app_commands.allowed_contexts(guilds=True, dms=True, private_channels=True)
 @bot.tree.command(name="롤", description="5명 선택 랜덤 라인")
-@app_commands.describe(user1 = "1번")
-@app_commands.describe(user2 = "2번")
-@app_commands.describe(user3 = "3번")
-@app_commands.describe(user4 = "4번")
-@app_commands.describe(user5 = "5번")
+@app_commands.describe(user1 = "1번", user2 = "2번", user3 = "3번", user4 = "4번", user5 = "5번")
 async def lol(interation: discord.Interaction, user1:discord.User, user2:discord.User, user3:discord.User, user4:discord.User, user5:discord.User):
     users = [user1,user2,user3,user4,user5]
     random.shuffle(users)
@@ -38,16 +34,7 @@ async def lol(interation: discord.Interaction, user1:discord.User, user2:discord
 @app_commands.allowed_installs(guilds=True, users=True)
 @app_commands.allowed_contexts(guilds=True, dms=True, private_channels=True)
 @bot.tree.command(name="팀수동", description="10명 선택 랜덤 팀")
-@app_commands.describe(user1 = "1번")
-@app_commands.describe(user2 = "2번")
-@app_commands.describe(user3 = "3번")
-@app_commands.describe(user4 = "4번")
-@app_commands.describe(user5 = "5번")
-@app_commands.describe(user6 = "6번")
-@app_commands.describe(user7 = "7번")
-@app_commands.describe(user8 = "8번")
-@app_commands.describe(user9 = "9번")
-@app_commands.describe(user10 = "10번")
+@app_commands.describe(user1 = "1번", user2 = "2번", user3 = "3번", user4 = "4번", user5 = "5번", user6 = "6번", user7 = "7번", user8 = "8번", user9 = "9번", user10 = "10번")
 async def teamsu(interaction: discord.Interaction, user1:discord.User, user2:discord.User, user3:discord.User, user4:discord.User, user5:discord.User, user6:discord.User, user7:discord.User, user8:discord.User, user9:discord.User, user10:discord.User):
     users = [user1,user2,user3,user4,user5,user6,user7,user8,user9,user10]
     random.shuffle(users)
@@ -117,6 +104,7 @@ async def arena(interation : discord.Interaction):
 @app_commands.allowed_installs(guilds=True, users=False)
 @app_commands.allowed_contexts(guilds=True, dms=True, private_channels=True)
 @bot.tree.command(name="ㄹㄹ", description="채널에 들어가있는 사람으로 자동 라인")
+@app_commands.describe(ex="제외(1)", ex2="제외(2)",ex3="제외(3)", ex4="제외(4)", ex5="제외(5)")
 async def auto(interation: discord.Interaction, ex: discord.User=None, ex2: discord.User=None, ex3: discord.User=None, ex4: discord.User=None, ex5: discord.User=None):
     author = bot.get_user(interation.user.id)
     voice_state = interation.user.voice
