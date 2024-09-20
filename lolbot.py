@@ -133,19 +133,19 @@ async def auto(interation: discord.Interaction, ex: discord.User=None, ex2: disc
 
     for i in users :
         if ex is not None:
-            if i.id == ex.id:
+            if str(i.id) == str(ex.id):
                 users.remove(i)
         if ex2 is not None:
-            if i.id == ex2.id:
+            if str(i.id) == str(ex2.id):
                 users.remove(i)
         if ex3 is not None:
-            if i.id == ex3.id:
+            if str(i.id) == str(ex3.id):
                 users.remove(i)
         if ex4 is not None:
-            if i.id == ex4.id:
+            if str(i.id) == str(ex4.id):
                 users.remove(i)
         if ex5 is not None:
-            if i.id == ex5.id:
+            if str(i.id) == str(ex5.id):
                 users.remove(i)
 
         if i.bot:
