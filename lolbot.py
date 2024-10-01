@@ -2,7 +2,8 @@ import discord
 from discord import app_commands
 from discord.ext import commands
 import random
-
+from datetime import datetime
+import pytz
 
 
 intents = discord.Intents.all()
@@ -21,6 +22,12 @@ async def on_ready():
     except Exception as e:
         print(e)
 
+@app_commands.allowed_installs(guilds=False, users=True)
+@app_commands.allowed_contexts(guilds=True, dms=True, private_channels=True)
+@bot.tree.command(name="lag", description="지금 몇시지")
+async def lag(interation: discord.Interaction):
+    current_time = datetime.now(pytz.timezone("US/Central")).strftime("%Y-%m-%d %H:%M:%S")
+    await interation.response.send_message(current_time)
 
 @app_commands.allowed_installs(guilds=True, users=True)
 @app_commands.allowed_contexts(guilds=True, dms=True, private_channels=True)
