@@ -66,10 +66,10 @@ def update_balance(user_id, guild_id, amount):
     c.execute("UPDATE users SET balance=? WHERE user_id=? AND guild_id=?", (amount, user_id, guild_id))
     conn.commit()
 
-def save_bet_history(user_id, guild_id, bet_amount, result):
+def save_bet_history(user_id, guild_id, bet_amount, beton):
     timestamp = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
     c.execute("INSERT INTO bet_history (user_id, guild_id, bet_amount, bet_on, timestamp) VALUES (?, ?, ?, ?, ?)",
-              (user_id, guild_id, bet_amount, result, timestamp))
+              (user_id, guild_id, bet_amount, beton, timestamp))
     conn.commit()
 
 def update_bet_result(user_id, guild_id, bet_id, result):
@@ -81,14 +81,14 @@ def update_bet_result(user_id, guild_id, bet_id, result):
 @bot.tree.command(name="돈지급", description="배팅 시작하기")
 @app_commands.checks.has_permissions(moderate_members=True)
 async def give_money(interation: discord.Interaction, member: discord.Member, amount: int):
-    guild_id = ctx.guild.id
+    guild_id = interation.guild.id
     current_balance = get_balance(member.id, guild_id)
 
     # 잔액 업데이트
     new_balance = current_balance + amount
     update_balance(member.id, guild_id, new_balance)
 
-    await ctx.send(f"{member.mention}님에게 {amount}원을 추가했습니다. 현재 잔액: {new_balance}원.")
+    await interation.response.send_message(f"{member.mention}님에게 {amount}원을 추가했습니다. 현재 잔액: {new_balance}원.")
 
 @app_commands.allowed_installs(guilds=True, users=False)
 @app_commands.allowed_contexts(guilds=True, dms=False, private_channels=False)
@@ -173,7 +173,7 @@ async def balance(interation: discord.Interaction):
 async def history(interation: discord.Interaction):
     user_id = interation.user.id
     guild_id = interation.guild.id  # 서버 ID 가져오기
-    c.execute("SELECT bet_amount, result, timestamp FROM bet_history WHERE user_id=? AND guild_id=? ORDER BY timestamp DESC LIMIT 5",
+    c.execute("SELECT bet_amount, bet_on, timestamp FROM bet_history WHERE user_id=? AND guild_id=? ORDER BY timestamp DESC LIMIT 5",
               (user_id, guild_id))
     history = c.fetchall()
 
