@@ -178,11 +178,17 @@ async def balance(interation: discord.Interaction):
 @app_commands.allowed_installs(guilds=True, users=False)
 @app_commands.allowed_contexts(guilds=True, dms=False, private_channels=False)
 @bot.tree.command(name="잔액보기", description="잔액 확인(관리자)")
+@app_commands.checks.has_permissions(moderate_members=True)
 async def balance_(interation: discord.Interaction, member:discord.User):
     user_id = member.id
     guild_id = interation.guild.id  # 서버 ID 가져오기
     balance = get_balance(user_id, guild_id)
     await interation.response.send_message(f"{member.mention}님의 현재 잔액은 {balance}원입니다.")
+
+
+@balance_.error
+async def balance_error(interaction: discord.Interaction, error):
+    await interaction.response.send_message("응 너 권한 없어", ephemeral=True)
 
 @app_commands.allowed_installs(guilds=True, users=False)
 @app_commands.allowed_contexts(guilds=True, dms=False, private_channels=False)
@@ -203,7 +209,7 @@ async def history(interation: discord.Interaction):
 @app_commands.allowed_installs(guilds=True, users=False)
 @app_commands.allowed_contexts(guilds=True, dms=False, private_channels=False)
 @app_commands.checks.has_permissions(moderate_members=True)
-@bot.tree.command(name="기록보기", description="베팅 기록 확인")
+@bot.tree.command(name="기록보기", description="베팅 기록 확인(관리자)")
 async def history_(interation: discord.Interaction, member:discord.User):
     user_id = member.id
     guild_id = interation.guild.id  # 서버 ID 가져오기
@@ -217,6 +223,9 @@ async def history_(interation: discord.Interaction, member:discord.User):
     else:
         await interation.response.send_message(f"{member.mention}님의 베팅 기록이 없습니다.")
 
+@history_.error
+async def history_error(interaction: discord.Interaction, error):
+    await interaction.response.send_message("응 너 권한 없어", ephemeral=True)
 
 @app_commands.allowed_installs(guilds=True, users=False)
 @app_commands.allowed_contexts(guilds=True, dms=False, private_channels=False)
